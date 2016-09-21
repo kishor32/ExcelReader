@@ -10,6 +10,14 @@ public interface ColumnMap {
         int DESCRIPTION=1;
 
         int EXECUTE=2;
+
+        int BROWSER=3;
+    }
+
+    interface Sprint1_LogIn{
+
+        int TC_ID=0;
+
     }
 
 }

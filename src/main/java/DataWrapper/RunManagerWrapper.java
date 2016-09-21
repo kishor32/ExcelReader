@@ -9,7 +9,9 @@ public class RunManagerWrapper {
 
     private  List <String>  Description=new ArrayList();
 
-    private  List <String>   Execute=new ArrayList();
+    private  List <String>  Execute=new ArrayList();
+
+    private String browser;
 
 
     public List<String>  getTestCase_ID() {
@@ -40,5 +42,13 @@ public class RunManagerWrapper {
     public void setExecute(String execute) {
 
         Execute.add(execute);
+    }
+
+    public String getBrowser() {
+        return browser;
+    }
+
+    public void setBrowser(String browser) {
+        this.browser = browser;
     }
 }
