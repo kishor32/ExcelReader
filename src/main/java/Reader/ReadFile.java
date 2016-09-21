@@ -2,9 +2,12 @@ package main.java.Reader;
 
 import main.java.DataWrapper.RunManagerWrapper;
 import main.java.ExcelOperation.ExcelOperation;
+import static main.java.Reader.ColumnMap.RunManager.DESCRIPTION;
+import static main.java.Reader.ColumnMap.RunManager.EXECUTE;
+import static main.java.Reader.ColumnMap.RunManager.TC_ID;
 
 
-public class ReadFile extends ExcelOperation {
+public class ReadFile extends ExcelOperation implements ColumnMap {
 
     private RunManagerWrapper runManagerWrapper;
 
@@ -25,40 +28,16 @@ public class ReadFile extends ExcelOperation {
 
         for (int row = 1; row <= rowNum; row++) {
 
-                int cellNum = this.getCellNumber(this.getRow(row));
+            String flag=(String)this.getCellValue(row,EXECUTE);
 
-                for (int cell = 0; cell < cellNum; cell++) {
+             if(flag.equalsIgnoreCase("yes")){
 
-                    int cellIndex = this.getCell(row, cell).getColumnIndex();
+                 runManagerWrapper.setTestCase_ID((String)this.getCellValue(row,TC_ID));
 
-                    switch (cellIndex) {
+                 runManagerWrapper.setDescription((String)this.getCellValue(row,DESCRIPTION));
+             }
+        }
 
-                        case 0:
-                            runManagerWrapper.setTestCase_ID(
-                                    (String) getCellValue(this.getCell(row, cell)));
-
-                            break;
-
-                        case 1:
-                            runManagerWrapper.setDescription(
-                                    (String) getCellValue(this.getCell(row,cell)));
-
-                            break;
-
-                        case 2: String flag=((String) getCellValue(this.getCell(row,cell)));
-
-                            if(flag.equalsIgnoreCase("y")) {
-
-                                runManagerWrapper.setExecute(flag);
-                            }
-                            break;
-
-                        default:
-
-                            throw new RuntimeException(ReadFile.class + " no column index found ");
-                    }
-                }
-            }
         this.closeWorkBook();
         this.closeExcelFile();
         return runManagerWrapper;

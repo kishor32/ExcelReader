@@ -87,14 +87,10 @@ public class ExcelOperation {
         return sheet.getPhysicalNumberOfRows() - 1;
     }
 
-    protected int getCellNumber(XSSFRow row){
 
-        return row.getLastCellNum();
-    }
+    protected Object getCellValue(int row, int col) {
 
-
-    protected Object getCellValue(Cell cell) {
-
+        Cell cell=this.getCell(row,col);
         switch (cell.getCellType()) {
 
             case CELL_TYPE_STRING:
@@ -129,12 +125,12 @@ public class ExcelOperation {
         }
     }
 
-    protected XSSFCell getCell(int row, int col) {
+     private XSSFCell getCell(int row, int col) {
 
         return getSheet().getRow(row).getCell(col);
     }
 
-    protected XSSFRow getRow(int rowCount){
+    private XSSFRow getRow(int rowCount){
 
         return getSheet().getRow(rowCount);
     }
