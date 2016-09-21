@@ -1,41 +1,44 @@
 package main.java.DataWrapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RunManagerWrapper {
 
-    private  String  TestCase_ID;
+    private  List <String>  TestCase_ID=new ArrayList();
 
-    private  String  Description;
+    private  List <String>  Description=new ArrayList();
 
-    private  String  Execute;
+    private  List <String>   Execute=new ArrayList();
 
 
-    public String getTestCase_ID() {
+    public List<String>  getTestCase_ID() {
 
         return TestCase_ID;
     }
 
     public void setTestCase_ID(String testCase_ID) {
 
-        TestCase_ID = testCase_ID;
+        getTestCase_ID().add(testCase_ID);
     }
 
-    public String getDescription() {
+    public List <String>  getDescription() {
 
         return Description;
     }
 
     public void setDescription(String description) {
 
-        Description = description;
+        Description.add(description);
     }
 
-    public String getExecute() {
+    public List<String>  getExecute() {
 
         return Execute;
     }
 
     public void setExecute(String execute) {
 
-        Execute = execute;
+        Execute.add(execute);
     }
 }

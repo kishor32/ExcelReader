@@ -2,41 +2,29 @@ package main.java.ExcelOperation;
 
 import static main.java.util.Util.getFileSeparator;
 import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_STRING;
-
-import main.java.util.Util;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Workbook;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.concurrent.ConcurrentHashMap;
 
 
 public class ExcelOperation {
 
 
-    private InputStream file=null;
+    private InputStream file = null;
 
-    private HSSFWorkbook wb;
+    private XSSFWorkbook wb;
 
-    private HSSFSheet sheet;
-
-    private HSSFCell cell;
-
-    private HSSFRow row;
+    private XSSFSheet sheet;
 
     private String fiePath;
 
     private String fileName;
-
-    private String dataSheetName;
-
-    private ConcurrentHashMap<String , String> dataMap;
 
 
     public ExcelOperation(String filePath, String fileName) {
@@ -49,37 +37,32 @@ public class ExcelOperation {
     /*
     @Function to open Excel file
      */
-    private void openFile(){
+    private void openFile() {
 
 
-        String absPath=fiePath+getFileSeparator()+fileName+".xlsx";
+        String absPath = fiePath + getFileSeparator() + fileName;
+
+        if (!fileName.endsWith("xlsx")) {
+
+            throw new RuntimeException(ExcelOperation.class + "-The specified file is not a modern excel file.Please update the file");
+        }
 
         try {
 
-            file=new FileInputStream(absPath);
+            file = new FileInputStream(absPath);
             setWrokBook(file);
 
-        }catch(FileNotFoundException e){
+        } catch (FileNotFoundException e) {
 
-          e.printStackTrace();
+            e.printStackTrace();
 
-        }finally {
-
-            try {
-
-                file.close();
-
-            }catch (IOException e){
-
-                e.printStackTrace();
-            }
         }
     }
 
     private void setWrokBook(InputStream file) {
 
         try {
-            wb = new HSSFWorkbook(file);
+            wb = new XSSFWorkbook(file);
 
         } catch (IOException e) {
 
@@ -87,36 +70,73 @@ public class ExcelOperation {
         }
     }
 
-    public HSSFWorkbook getWorkbook(){
 
-        return wb;
-    }
+    public void setDataSheet(String name) {
 
-    public void setDataSheetName(String name){
-
-        this.dataSheetName=name;
-    }
-
-    private String getDataSheetName(){
-
-        return dataSheetName;
-    }
-
-    private void setSheet(){
-
-        sheet=wb.getSheet(getDataSheetName());
+        sheet = wb.getSheet(name);
     }
 
 
-    public int getRowNumber(){
+    protected XSSFSheet getSheet() {
 
-       return sheet.getLastRowNum();
-
+        return sheet;
     }
 
 
-    private String getValue() {
+    protected int getRowNumber() {
+        return sheet.getPhysicalNumberOfRows() - 1;
+    }
 
+    protected int getCellNumber(XSSFRow row){
+
+        return row.getLastCellNum();
+    }
+
+
+    protected Object getCellValue(Cell cell) {
+
+        switch (cell.getCellType()) {
+
+            case CELL_TYPE_STRING:
+                return cell.getStringCellValue();
+        }
+
+        return null;
+    }
+
+
+    protected void closeWorkBook() {
+
+        try {
+            wb.close();
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+
+    }
+
+    protected void closeExcelFile() {
+
+        try {
+
+            file.close();
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
+
+    protected XSSFCell getCell(int row, int col) {
+
+        return getSheet().getRow(row).getCell(col);
+    }
+
+    protected XSSFRow getRow(int rowCount){
+
+        return getSheet().getRow(rowCount);
     }
 
 }
