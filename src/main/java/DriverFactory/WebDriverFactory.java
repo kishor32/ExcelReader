@@ -1,4 +1,4 @@
-package main.java.DriverFactoey;
+package main.java.DriverFactory;
 
 public class WebDriverFactory {
 
