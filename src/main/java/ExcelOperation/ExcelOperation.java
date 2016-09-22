@@ -84,7 +84,8 @@ public class ExcelOperation {
 
 
     protected int getRowNumber() {
-        return sheet.getPhysicalNumberOfRows() - 1;
+
+        return sheet.getPhysicalNumberOfRows()-1;
     }
 
 
@@ -125,12 +126,12 @@ public class ExcelOperation {
         }
     }
 
-     private XSSFCell getCell(int row, int col) {
+     protected XSSFCell getCell(int row, int col) {
 
         return getSheet().getRow(row).getCell(col);
     }
 
-    private XSSFRow getRow(int rowCount){
+    protected XSSFRow getRow(int rowCount){
 
         return getSheet().getRow(rowCount);
     }

@@ -1,6 +1,7 @@
 package test.java;
 
-import main.java.Reader.ReadFile;
+import main.java.DataWrapper.SeleniumKeywords;
+import main.java.Reader.DataTableReader;
 import static main.java.util.ReadProperties.getProperty;
 
 
@@ -8,9 +9,27 @@ public class TestReadFile  {
 
     public static void main(String [] args){
 
-        ReadFile file=new ReadFile(getProperty("fileLocation"),getProperty("filename"));
+        DataTableReader tableReader=new DataTableReader(
 
-        System.out.println(file.getTestParam("Full suite").getTestCase_ID());
+                getProperty("datatableLocation"),getProperty("tName"));
+
+        SeleniumKeywords s=tableReader.getKeyWords("Bussiness Flow");
+
+        for(String key: s.getKeyWords()){
+
+            System.out.println(key);
+        }
+
+        /*now read some test data*/
+
+        SeleniumKeywords.SeleniumTestData s1=tableReader.getTestData("General data");
+
+        for(String data:s1.getData()){
+
+            System.out.println(data);
+
+        }
+
 
     }
 }
