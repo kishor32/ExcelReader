@@ -24,6 +24,7 @@ public class HomePageFlow {
 
     }
 
+
     public void clickOnMerchant(){
 
         WebElement  merchantElement=uiaction.findElement(HomepageOR.CLICK_ON_MERCENT);
@@ -33,11 +34,12 @@ public class HomePageFlow {
             uiaction.clickOn(merchantElement);
         }
 
-        if(Util.HTTPResponse.is200(iURL.HOME_PAGE_URL_MERCENT)==true){
+        if(Util.HTTPResponse.is200(iURL.HOME_PAGE_URL_MERCENT)){
 
             /* @Todo code loging reporting */
             System.out.println("We are on merchant page");
-
         }
     }
+
+
 }

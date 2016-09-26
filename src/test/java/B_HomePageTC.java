@@ -49,12 +49,6 @@ public class B_HomePageTC implements iColumnMap.LoginData, iURL {
         homePageFlow.clickOnMerchant();
     }
 
-    @Test
-
-    public void clickOnAllMerchantLink(){
-
-         homePageFlow.clickOnAllMerchantLink();
-    }
 
     @Test
     public  void takeScreenShot(){
