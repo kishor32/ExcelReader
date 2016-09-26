@@ -17,4 +17,10 @@ public interface iAction {
 
      void invokeApp(String URL);
 
+     void closeBrowser();
+
+     void back();
+
+     void forward();
+
 }

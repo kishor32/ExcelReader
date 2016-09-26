@@ -20,7 +20,7 @@ public class DataTableReader extends ExcelOperation implements ColumnMap {
     }
 
 
-    public SeleniumKeywords getKeyWords(String sheetName){
+    public SeleniumKeywords setKeyWords(String sheetName){
 
         ReadFile file=new ReadFile(getProperty("fileLocation"),getProperty("filename"));
 

@@ -1,5 +1,6 @@
 package main.java.util;
 
+import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import main.java.DriverFactory.WebDriverFactory;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
@@ -18,7 +19,11 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
-public class WebDriverUtil {
+public final class WebDriverUtil {
+
+    private WebDriverUtil(){
+
+    }
 
     private static WebDriver driver= WebDriverFactory.getDriver().getBrowser();
 
@@ -28,12 +33,17 @@ public class WebDriverUtil {
 
                 .pollingEvery(5, TimeUnit.SECONDS)
 
-                .withTimeout(60, TimeUnit.SECONDS);
+                .withTimeout(60, TimeUnit.SECONDS)
+
+                .withMessage("found");
+
         try {
 
             return wait.until(webDriver->webDriver.findElement(locator));
 
-          }catch(NoSuchElementException e){
+          }catch(ElementNotFoundException e){
+
+            e.printStackTrace();
 
         }
         return null;
@@ -74,15 +84,17 @@ public class WebDriverUtil {
                 .pollingEvery(5, TimeUnit.SECONDS)
 
                 .withTimeout(60, TimeUnit.SECONDS);
-        try {
 
-            return wait.until(webDriver->webDriver.findElements(locator));
+            List<WebElement>elements= wait.until(webDriver->webDriver.findElements(locator));
 
-         }catch(NoSuchElementException e){
+            if(elements.size()==0){
 
-        }
-        return null;
+                throw  new RuntimeException("No elements found");
 
+            }else {
+
+                return elements;
+            }
     }
 
     public static void invokeApp(String url){
@@ -91,6 +103,54 @@ public class WebDriverUtil {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
 
+    }
+
+    public static void waitAferClick( int time){
+
+        driver.manage().timeouts().implicitlyWait(time,TimeUnit.SECONDS);
+    }
+
+
+      public static class CloseDriver{
+
+          public static void close(){
+
+              driver.close();
+          }
+
+          public static void quit(){
+
+              driver.quit();
+          }
+    }
+
+    public static void backBrowSer(){
+
+        driver.navigate().back();
+
+        driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
+    }
+
+    public static void forwardBrowser(){
+
+        driver.navigate().forward();
+        driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
+    }
+
+    public static void navigateTo(String url){
+
+        driver.navigate().to(url);
+        driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
+    }
+
+
+    public static  void replaceCurentUrlAndMove(String oldUrlPart, String newUrlPart){
+
+        String url=driver.getCurrentUrl().replace(oldUrlPart,newUrlPart);
+
+        driver.navigate().to(url);
+
+        driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
     }
 
 }

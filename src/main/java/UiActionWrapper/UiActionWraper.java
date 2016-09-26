@@ -34,6 +34,7 @@ public class UiActionWraper implements iAction {
     public void clickOn(WebElement element) {
 
         element.click();
+        WebDriverUtil.waitAferClick(20);
 
     }
 
@@ -47,5 +48,35 @@ public class UiActionWraper implements iAction {
     public void invokeApp(String URL) {
 
         WebDriverUtil.invokeApp(URL);
+    }
+
+    @Override
+    public void closeBrowser() {
+
+        WebDriverUtil.CloseDriver.close();
+    }
+
+    @Override
+    public void back() {
+
+        WebDriverUtil.backBrowSer();
+    }
+
+    @Override
+    public void forward() {
+
+        WebDriverUtil.forwardBrowser();
+    }
+
+    public void To(String url){
+
+        WebDriverUtil.navigateTo(url);
+    }
+
+    public void replaceUrl(String oldU, String newU){
+
+        WebDriverUtil.replaceCurentUrlAndMove(oldU,newU);
+
+
     }
 }

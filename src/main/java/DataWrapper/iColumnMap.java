@@ -12,7 +12,9 @@ public interface iColumnMap {
 
 
 
-    interface CreatePayment{
+    interface adminPage{
+
+        int SEARCH_TERM=0;
 
 
     }

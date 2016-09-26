@@ -13,7 +13,7 @@ public final class LoginOR {
 
      public static By USERNAME=By.id("username");
 
-     public static By PASSWORD=By.cssSelector("password");
+     public static By PASSWORD=By.id("password");
 
      public static By BUTTON=By.id("login");
 

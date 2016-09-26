@@ -3,7 +3,7 @@ package main.java.BussinessFlow.LoginFlow;
 import main.java.UiActionWrapper.UiActionWraper;
 import org.openqa.selenium.WebElement;
 import static main.java.ObjectRepository.LoginOR.LoginOR.*;
-
+import static main.java.util.ReadProperties.getProperty;
 
 public class LoginFlow {
 
@@ -11,7 +11,14 @@ public class LoginFlow {
     private UiActionWraper uiaction=UiActionWraper.getUI();
 
 
+    private void invokeApp(){
+
+        uiaction.invokeApp(getProperty("AppURL"));
+    }
+
     public void LogIn(String usrname, String password){
+
+        invokeApp();
 
         uiaction.clickOn(uiaction.findElement(LOGINLINK));
 
@@ -26,4 +33,5 @@ public class LoginFlow {
         uiaction.clickOn(uiaction.findElement(BUTTON));
 
     }
+
 }

@@ -10,6 +10,7 @@ public class ReadFile extends ExcelOperation implements ColumnMap {
 
     private RunManagerWrapper runManagerWrapper;
 
+    private Browser browser=Browser.getBrowser();
 
     public ReadFile(String filePath, String fileName) {
 
@@ -35,7 +36,7 @@ public class ReadFile extends ExcelOperation implements ColumnMap {
 
                  runManagerWrapper.setDescription((String)this.getCellValue(row,DESCRIPTION));
 
-                 new Browser().setBrowserName((String)this.getCellValue(row,BROWSER));
+                 browser.setBrowserName((String)this.getCellValue(row,BROWSER));
              }
         }
 
